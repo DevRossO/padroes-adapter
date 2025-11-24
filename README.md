@@ -8,42 +8,45 @@ Ele atua como um **"tradutor"** entre duas classes, convertendo a interface de u
 ---
 
 ## 🎯 Problema que o Adapter Resolve
+O cliente (celular) só entende o método:
+carregar_usb_c()
 
-Imagine que o seu sistema espera trabalhar com um método chamado `conectar_usb_c()`, mas você precisa usar um módulo legado que só possui o método `conectar_usb_a()`.
+Mas o carregador antigo oferece apenas:
+fornecer_energia_usb_a()
 
 Sem o Adapter:
-- o código fica acoplado ao sistema antigo  
-- você precisa alterar a classe existente  
-- a manutenção fica ruim  
+
+* O celular não tem como usar o carregador antigo
+* Seria necessário alterar código legado
+* O sistema fica acoplado e difícil de manter
 
 Com o Adapter:
-- você cria uma classe intermediária  
-- ela traduz chamadas modernas → para chamadas antigas  
-- o cliente não precisa saber que existe um sistema legado  
 
----
+* Criamos uma classe intermediária
+* Ela traduz USB-C → USB-A
+* O cliente continua esperando apenas USB-C
+* O carregador antigo funciona sem ser modificado
 
-## 📐 Estrutura (Diagrama)
-
-```mermaid
 classDiagram
-    class Cliente {
-        +usar_dispositivo(entrada)
+    class Celular {
+        +carregar(carregador)
     }
 
-    class EntradaModerna {
-        +conectar_usb_c()
+    class CarregadorUSBC {
+        +carregar_usb_c()
     }
 
-    class EntradaAntiga {
-        +conectar_usb_a()
+    class CarregadorUSBA {
+        +fornecer_energia_usb_a()
     }
 
-    class AdapterEntrada {
-        -entrada_antiga: EntradaAntiga
-        +conectar_usb_c()
+    class AdapterUSBCtoA {
+        -carregador_antigo: CarregadorUSBA
+        +carregar_usb_c()
     }
 
-    Cliente --> EntradaModerna
-    AdapterEntrada --|> EntradaModerna
-    AdapterEntrada --> EntradaAntiga
+    Celular --> CarregadorUSBC
+    Celular --> AdapterUSBCtoA
+
+    AdapterUSBCtoA --|> CarregadorUSBC
+    AdapterUSBCtoA --> CarregadorUSBA
