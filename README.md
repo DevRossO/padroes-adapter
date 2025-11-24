@@ -27,6 +27,9 @@ Com o Adapter:
 * O cliente continua esperando apenas USB-C
 * O carregador antigo funciona sem ser modificado
 
+## 📐 Diagrama em Mermaid
+
+```mermaid
 classDiagram
     class Celular {
         +carregar(carregador)
