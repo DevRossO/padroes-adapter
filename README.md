@@ -50,3 +50,4 @@ classDiagram
 
     AdapterUSBCtoA --|> CarregadorUSBC
     AdapterUSBCtoA --> CarregadorUSBA
+
